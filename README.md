@@ -2,7 +2,7 @@ MicroFoot
 ============
 The new and addictive video game. Coming soon...
 
-| ![MicroFoot](https://raw.githubusercontent.com/AdrienVR/MicroFoot/master/microFoot_preview.jpg "Warning, this a preview of the alpha version") |
+| ![MicroFoot](https://raw.githubusercontent.com/AdrienVR/MicroFoot/master/microFoot_preview.png "Warning, this a preview of the alpha version") |
 |:----:|
 
 ## Download binary
