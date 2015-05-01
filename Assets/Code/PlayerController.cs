@@ -9,9 +9,11 @@ public class PlayerController : MonoBehaviour {
 	public float VelocityCoef = 20;
 	public float CameraManiability = 1;
 
-	public Transform camera;
+	private Animation anim;
 
 	private float m_angleCamera;
+
+	private bool flying = true;
 
 	Vector3 velocity;
 	ControllerBase controller;
@@ -20,7 +22,17 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 		controller = ControllerInterface.GetController(players);
 		players++;
-		camera = transform;//.Find("camera");
+		anim = transform.Find("soldier").animation;
+	}
+
+	void OnCollisionEnter(Collision collision) {
+		if (collision.gameObject.name == "mesh")
+			flying = false;
+	}
+	
+	void OnCollisionExit(Collision collision) {
+		if (collision.gameObject.name == "mesh")
+			flying = true;
 	}
 	
 	// Update is called once per frame
@@ -43,9 +55,26 @@ public class PlayerController : MonoBehaviour {
 			velocity -= transform.right;
 		}
 		velocity = velocity.normalized * VelocityCoef;
-		velocity.y = 0;
+		if (flying == true)
+		{
+			velocity.y = -10;
+		}
+		else
+		{
+			velocity.y = 0;
+		}
 		//rigidbody.velocity = velocity;
-		rigidbody.AddForce(velocity);
+		rigidbody.velocity = (velocity);
+
+		if (velocity == Vector3.zero)
+		{
+			anim["Armature|ArmatureAction"].time = 0;
+			anim.Stop();
+		}
+		else if (anim.isPlaying == false)
+		{
+			anim.Play();
+		}
 
 		
 		if (controller.GetKey("cameraRight"))
@@ -57,28 +86,25 @@ public class PlayerController : MonoBehaviour {
 			m_angleCamera -= Time.deltaTime * CameraManiability;
 		}
 
-		camera.localRotation = Quaternion.Euler(new Vector3(camera.localRotation.eulerAngles.x,
-		                                                    m_angleCamera,
-		                                                    camera.localRotation.eulerAngles.z));
 
 
 	}
 
 	void Update() {
-		transform.up = Vector3.up;
-		
-		camera.localRotation = Quaternion.Euler(new Vector3(camera.localRotation.eulerAngles.x,
-		                                                    m_angleCamera,
-		                                                    camera.localRotation.eulerAngles.z));
-		return;
+
+		Vector3 up;
 		RaycastHit hit;
 		if (Physics.Raycast(transform.position + 5 * transform.up, -20 * transform.up, out hit)){
-			transform.up = Vector3.Slerp(transform.up, hit.normal, Time.deltaTime / TimeToComeBackUp);
+			up = Vector3.Slerp(transform.up, hit.normal, Time.deltaTime / TimeToComeBackUp);
 		}
 		else
 		{
-			transform.up = Vector3.Slerp(transform.up, Vector3.up, Time.deltaTime / TimeToComeBackUp);
+			up = Vector3.Slerp(transform.up, Vector3.up, Time.deltaTime / TimeToComeBackUp);
 		}
+		transform.localRotation = Quaternion.LookRotation(Vector3.forward, up);
+		transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.eulerAngles.x,
+		                                                       m_angleCamera,
+		                                                       transform.localRotation.eulerAngles.z));
 	}
 
 }

@@ -1,0 +1,1 @@
+xcopy "Assets\Config\*.JSON" "Build\microFoot_Data\Config\*.JSON" /e /i /y
