@@ -13,5 +13,7 @@
 	"a12":"switchCamera",
 	"a13":"inverseCamera",
 	"a14":"cameraLeft",
-	"a15":"cameraRight"
+	"a15":"cameraRight",
+	"a16":"cameraUp",
+	"a17":"cameraDown"
 }

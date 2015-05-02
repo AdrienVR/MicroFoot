@@ -2,8 +2,8 @@ MicroFoot
 ============
 The new and addictive video game. Coming soon...
 
-| ![MicroFoot](https://raw.githubusercontent.com/AdrienVR/MicroFoot/master/microFoot_preview.png "Warning, this a preview of the alpha version") |
-|:----:|
+| ![MicroFoot](https://raw.githubusercontent.com/AdrienVR/MicroFoot/master/microFoot_preview.png "Warning, this a preview of the alpha version") | ![MicroFoot](https://raw.githubusercontent.com/AdrienVR/MicroFoot/master/microFoot_preview_2.png "Warning, this a preview of the alpha version") |
+|:----:|:----:|
 
 ## Download binary
 
@@ -12,7 +12,7 @@ The new and addictive video game. Coming soon...
 
 ## Project Details
 
-The project began on April 6th 2015 and should release a final version on April 4th 2015.  
+The project began on April 29th 2015 and should release a final version on May 4th 2015.  
   
 4 players in local and network mode.
 
