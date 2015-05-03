@@ -8,8 +8,8 @@ The new and addictive video game. Coming soon...
 ## Download binary
 
 * Windows :  
-		[MicroFoot alpha 100% (7z, 6.1mo)]https://drive.google.com/uc?export=download&id=0B2xlFxzCEekzczNEdXRBQWxHWXc
-		[MicroFoot alpha 100% (zip, 8.45mo)]https://drive.google.com/uc?export=download&id=0B2xlFxzCEekzYjFXSmh1SzMzQXM
+		[MicroFoot alpha 100% (7z, 6.1mo)]https://drive.google.com/uc?export=download&id=0B2xlFxzCEekzczNEdXRBQWxHWXc  
+		[MicroFoot alpha 100% (zip, 8.45mo)]https://drive.google.com/uc?export=download&id=0B2xlFxzCEekzYjFXSmh1SzMzQXM  
 
 ## Project Details
 
