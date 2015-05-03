@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour {
 		m_camera = GetComponentInChildren<Camera>();
 
 		controller = ControllerInterface.GetController(indexSoldier);
+		Debug.Log("Received "+controller.name+"game controller");
 		m_anim = transform.Find("soldier").animation;
 
 		switch (colorType) 
@@ -88,14 +89,15 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		// Jump
-		if (controller.GetKeyDown("jump")) 
+		if (controller.GetKey("jump") || controller.GetKey("action") || controller.GetKey("validate")) 
 		{
 			rigidbody.velocity = new Vector3(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
 		}
-		
-		if (controller.GetKeyDown("action")) 
+		else if (rigidbody.velocity.y > 0 && grounded)
 		{
-			rigidbody.AddForce(targetVelocity);
+			Vector3 veloc = rigidbody.velocity;
+			veloc.y = 0;
+			rigidbody.AddForce(veloc - rigidbody.velocity, ForceMode.VelocityChange);
 		}
 		
 		Debug.DrawRay(rr.point, rigidbody.velocity);
@@ -119,7 +121,7 @@ public class PlayerController : MonoBehaviour {
 	{
 		transform.localPosition = Vector3.zero;
 		transform.localRotation = Quaternion.identity;
-		m_angleCameraX = 0;
+		//m_angleCameraX = 0;
 		m_angleCameraY = 0;
 	}
 
@@ -148,11 +150,11 @@ public class PlayerController : MonoBehaviour {
 	{
 		if (controller.GetKey("cameraRight"))
 		{
-			m_angleCameraY += 2 * Time.deltaTime * CameraManiability * controller.GetAxis("cameraRight");
+			m_angleCameraY += 1.6f * Time.deltaTime * CameraManiability * controller.GetAxis("cameraRight");
 		}
 		if (controller.GetKey("cameraLeft"))
 		{
-			m_angleCameraY -= 2 * Time.deltaTime * CameraManiability * controller.GetAxis("cameraLeft");
+			m_angleCameraY -= 1.6f * Time.deltaTime * CameraManiability * controller.GetAxis("cameraLeft");
 		}
 		if (controller.GetKey("cameraUp"))
 		{

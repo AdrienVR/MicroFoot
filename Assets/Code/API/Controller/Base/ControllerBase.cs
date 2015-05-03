@@ -8,13 +8,15 @@ public class ControllerBase
 
 	private Dictionary <string, List<VirtualKey>> buttons;
 
+	public string name;
 	public string newKeyAction;
 	public VirtualKey newKey;
 
 	public ControllerBase  (string type) 
 	{
-		Debug.Log("Initializing controller "+type);
+		//Debug.Log("Initializing controller "+type);
 		this.buttons = ControllerResources.GetButtons(type);
+		name = type;
 	}
 
 	public void UpdateInternal()

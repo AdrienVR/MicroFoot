@@ -6,12 +6,15 @@ using System.IO;
 public class ControllerManager : MonoBehaviour 
 {
 
+	public static ControllerInterface ControllerInterface;
+
 	void Awake()
 	{
 		if (ControllerInterface.Instance == null)
 		{
-			new ControllerInterface();
+			ControllerInterface = new ControllerInterface();
 		}
+		DontDestroyOnLoad(transform.gameObject);
 	}
 
 	void Update()

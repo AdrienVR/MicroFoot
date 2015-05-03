@@ -29,23 +29,23 @@ public class ControllerTesting : MonoBehaviour {
 				}
 			}
 
-			for(int i = 0 ; i < Input.GetJoystickNames ().Length ; i++)
+			for(int j = 0 ; j < Input.GetJoystickNames ().Length ; j++)
 			{
-				if (controllerNames.IndexOf(Input.GetJoystickNames ()[i]) == -1)
-					controllerNames.Add(Input.GetJoystickNames ()[i]);
-				labels[i].text = controllerNames[i] + 
+				if (controllerNames.Count < Input.GetJoystickNames ().Length)
+					controllerNames.Add(Input.GetJoystickNames ()[j]);
+				labels[j].text = controllerNames[j] + 
 					"\n\n" +
-					labelTexts[i];
+					labelTexts[j];
 			}
 			
-			for(int i = Input.GetJoystickNames ().Length ; i < 4 ; i++)
+			for(int k = Input.GetJoystickNames ().Length ; k < 4 ; k++)
 			{
 				string name = "none";
-				if (i < controllerNames.Count)
-					name = controllerNames[i];
-				labels[i].text = name + 
+				if (k < controllerNames.Count)
+					name = controllerNames[k];
+				labels[k].text = name + 
 					"\n\n" +
-						labelTexts[i];
+						labelTexts[k];
 			}
 			yield return new WaitForSeconds(0.1f);
 		}

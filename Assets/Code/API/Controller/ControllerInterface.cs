@@ -25,7 +25,10 @@ public class ControllerInterface
 		allControllers.Add(new ControllerBase("Keyboard1"));
 		allControllers.Add(new ControllerBase("Keyboard2"));
 		allControllers.Add(new ControllerBase("Keyboard3"));
-		UpdateInternal();
+		while (Input.GetJoystickNames ().Length != instantiatedControllers)
+		{
+			UpdateInternal();
+		}
 	}
 	
 	public void UpdateInternal() 

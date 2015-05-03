@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour
 		{
 			categoryVolumes[category.name] = 1;
 		}
+		DontDestroyOnLoad(transform.gameObject);
 	}
 
 	public static void PlayDefaultMapMusic()

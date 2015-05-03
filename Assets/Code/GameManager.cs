@@ -5,23 +5,25 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour 
 {
 	public static GameManager Instance;
-
-	public int Players = 2;
-	public List<ColorType> colorTeams;
+	public static int TotalPlayers = 2;
+	
+	public int timer;
 	public List<GameObject> gameItems;
 	public List<Transform> respawnPositions1;
 	public List<Transform> respawnPositions2;
 	public Transform ballRespawnPosition;
 	public Goal goal1;
 	public Goal goal2;
-
 	public GUIText Text;
 
-	public int timer;
+	[HideInInspector]
+	public int Players = 2;
+	
+	[HideInInspector]
+	public ColorType TeamColor1;
+	[HideInInspector]
+	public ColorType TeamColor2;
 
-	public static int TotalPlayers = 2;
-
-	private int m_timer;
 
 	// Use this for initialization
 	void Awake () {
@@ -42,13 +44,13 @@ public class GameManager : MonoBehaviour
 			GameObject go = (GameObject) GameObject.Instantiate(Resources.Load(path), Vector3.zero, Quaternion.identity);
 			gameItems.Add(go);
 			PlayerController soldier = go.GetComponentInChildren<PlayerController>();
-			if (i > Players / colorTeams.Count - 1)
+			if (i > Players / 2 - 1)
 			{
-				soldier.colorType = colorTeams[1];
+				soldier.colorType = TeamColor2;
 			}
 			else
 			{
-				soldier.colorType = colorTeams[0];
+				soldier.colorType = TeamColor1;
 			}
 			soldier.indexSoldier = i;
 		}
@@ -58,10 +60,10 @@ public class GameManager : MonoBehaviour
 
 	private void UpdateGoalColor()
 	{
-		goal1.AttackerColor = colorTeams[0];
-		goal1.DefenderColor = colorTeams[1];
-		goal2.AttackerColor = colorTeams[1];
-		goal2.DefenderColor = colorTeams[0];
+		goal1.AttackerColor = TeamColor1;
+		goal1.DefenderColor = TeamColor2;
+		goal2.AttackerColor = TeamColor2;
+		goal2.DefenderColor = TeamColor1;
 	}
 
 	private IEnumerator ShowStartText()
@@ -133,13 +135,15 @@ public class GameManager : MonoBehaviour
 
 		StartCoroutine(ShowStartText());
 	}
+	
+	private int m_timer;
 }
 
 
 public enum ColorType
 {
-	Bleu,
-	Rouge,
-	Vert,
-	Jaune
+	Bleu = 0,
+	Rouge = 1,
+	Vert = 2,
+	Jaune = 3
 }
