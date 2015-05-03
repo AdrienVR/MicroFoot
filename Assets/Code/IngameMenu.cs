@@ -12,6 +12,7 @@ public class IngameMenu : MonoBehaviour {
 	public GameObject GameManagerObject;
 	public GameManager GameManager;
 	public GUIText PlayersText;
+	public GUIText ResultText;
 	public SoldierShow Team1;
 	public SoldierShow Team2;
 
@@ -22,6 +23,7 @@ public class IngameMenu : MonoBehaviour {
 	void Start () 
 	{
 		m_maxSelectables = FindMaxInSelectablesIndex();
+		m_resultText = ResultText.text;
 	}
 	
 	// Update is called once per frame
@@ -41,14 +43,46 @@ public class IngameMenu : MonoBehaviour {
 
 	}
 	
-	void OnRestart()
+	public void RestartGame()
 	{
-		
+		gameObject.SetActive(true);
+		GameManagerObject.SetActive(false);
+
+		Goal winner;
+		Goal looser;
+
+		if (GameManager.Goal1.Score > GameManager.Goal2.Score)
+		{
+			winner = GameManager.Goal1;
+			looser = GameManager.Goal2;
+		}
+		else
+		{
+			winner = GameManager.Goal2;
+			looser = GameManager.Goal1;
+		}
+
+		ResultText.text = m_resultText.Replace("X", winner.TeamName);
+		ResultText.text = ResultText.text.Replace("Y", winner.Score.ToString());
+		ResultText.text = ResultText.text.Replace("Z", looser.Score.ToString());
+		GameManager.Goal1.ResetScore();
+		GameManager.Goal2.ResetScore();
+
+		m_selector = -1;
+
+		ResultText.gameObject.SetActive(true);
+		DeselectSelectables();
 	}
 
-	void OnStart()
+	private void StartGame()
 	{
-
+		GameManager.Players = m_playersCounter;
+		GameManager.TeamColor1 = Team1.colorType;
+		GameManager.TeamColor2 = Team2.colorType;
+		GameManagerObject.SetActive(true);
+		GameManager.ResetGame();
+		ResultText.gameObject.SetActive(false);
+		gameObject.SetActive(false);
 	}
 
 	void UpdateSelector()
@@ -99,11 +133,7 @@ public class IngameMenu : MonoBehaviour {
 		{
 			if (m_selector == 3)
 			{
-				GameManager.Players = m_playersCounter;
-				GameManager.TeamColor1 = Team1.colorType;
-				GameManager.TeamColor2 = Team2.colorType;
-				GameManagerObject.SetActive(true);
-				gameObject.SetActive(false);
+				StartGame();
 			}
 			lockSelectionTimer += lockSelectionDelay;
 		}
@@ -145,6 +175,17 @@ public class IngameMenu : MonoBehaviour {
 				selectables[i].Deselect();
 		}
 	}
+	
+	void DeselectSelectables()
+	{
+		
+		for(int i = 0 ; i < selectablesIndex.Count ; i++)
+		{
+			selectables[i].Deselect();
+		}
+	}
+
+	private string m_resultText;
 
 	private int m_playersCounter = 2;
 	private int m_maxSelectables;

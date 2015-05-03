@@ -201,6 +201,10 @@ public class PlayerController : MonoBehaviour {
 		m_anim["Armature|ArmatureAction"].time = 0;
 		yield return new WaitForEndOfFrame();
 		m_anim.Stop();
+		yield return new WaitForEndOfFrame();
+		m_anim["Armature|ArmatureAction"].time = 0;
+		yield return new WaitForEndOfFrame();
+		m_anim.Stop();
 
 	}
 

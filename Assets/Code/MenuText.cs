@@ -31,7 +31,7 @@ public class MenuText : VirtualSelector
 
 	public void Hide()
 	{
-		m_enableTimer = true;
+		//m_enableTimer = true;
 		enabled = false;
 	}
 	
@@ -41,7 +41,7 @@ public class MenuText : VirtualSelector
 		guiText.fontSize = (int) (m_size * height / 300);
 	}
 
-	private bool m_enableTimer = false;
+	//private bool m_enableTimer = false;
 	private float m_size;
 	private float m_screenHeight = 300;
 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -12,9 +12,10 @@ public class GameManager : MonoBehaviour
 	public List<Transform> respawnPositions1;
 	public List<Transform> respawnPositions2;
 	public Transform ballRespawnPosition;
-	public Goal goal1;
-	public Goal goal2;
+	public Goal Goal1;
+	public Goal Goal2;
 	public GUIText Text;
+	public IngameMenu menu;
 
 	[HideInInspector]
 	public int Players = 2;
@@ -30,15 +31,33 @@ public class GameManager : MonoBehaviour
 
 		Instance = this;
 
-		TotalPlayers = Players;
-
 		if (AudioManager.Instance == null && ControllerInterface.Instance == null)
 		{
 			Application.LoadLevelAdditive("commonScene");
 		}
 
-		string path = "Prefab/Soldier";
+	}
 
+	public void ResetGame()
+	{
+		GameObject ball = null;
+		foreach(GameObject item in gameItems)
+		{
+			if (item.name != "Ball")
+			{
+				Destroy(item);
+			}
+			else
+			{
+				ball = item;
+			}
+		}
+		gameItems = new List<GameObject>{ball};
+		
+		TotalPlayers = Players;
+		
+		string path = "Prefab/Soldier";
+		
 		for(int i = 0 ; i < Players ; i++)
 		{
 			GameObject go = (GameObject) GameObject.Instantiate(Resources.Load(path), Vector3.zero, Quaternion.identity);
@@ -60,10 +79,12 @@ public class GameManager : MonoBehaviour
 
 	private void UpdateGoalColor()
 	{
-		goal1.AttackerColor = TeamColor1;
-		goal1.DefenderColor = TeamColor2;
-		goal2.AttackerColor = TeamColor2;
-		goal2.DefenderColor = TeamColor1;
+		Goal1.AttackerColor = TeamColor1;
+		Goal1.DefenderColor = TeamColor2;
+		Goal2.AttackerColor = TeamColor2;
+		Goal2.DefenderColor = TeamColor1;
+		Goal1.InitColor();
+		Goal2.InitColor();
 	}
 
 	private IEnumerator ShowStartText()
@@ -71,10 +92,12 @@ public class GameManager : MonoBehaviour
 		while (m_timer > 0)
 		{
 			Text.text = m_timer.ToString();
+			Text.transform.Find ("Text").guiText.text = m_timer.ToString();
 			yield return new WaitForSeconds(1);
 			m_timer--;
 		}
 		Text.text = "";
+		Text.transform.Find ("Text").guiText.text = "";
 
 	}
 
@@ -85,9 +108,18 @@ public class GameManager : MonoBehaviour
 
 	private IEnumerator ShowScore()
 	{
-		Text.text = goal1.TeamName +  " : " +  goal1.Score + " - " + goal2.TeamName +  " : " + goal2.Score;
-		yield return new WaitForSeconds(1);
+		string text = Goal1.TeamName +  " : " +  Goal1.Score + " - " + Goal2.TeamName +  " : " + Goal2.Score;;
+		Text.text = text;
+		Text.transform.Find ("Text").guiText.text = text;
+		yield return new WaitForSeconds(2);
 		ResetItems();
+		
+		Goal1.EnableCollider();
+		Goal2.EnableCollider();
+		if (Goal1.Score >= Goal.ScoreMax || Goal2.Score >= Goal.ScoreMax)
+		{
+			menu.RestartGame();
+		}
 	}
 
 	public void ResetItems()
@@ -99,7 +131,7 @@ public class GameManager : MonoBehaviour
 
 		foreach(GameObject item in gameItems)
 		{
-			Transform respawnPosition = ballRespawnPosition;
+			Transform respawnPosition = null;
 			if (item.GetComponent<Ball>() != null)
 			{
 				respawnPosition = ballRespawnPosition;

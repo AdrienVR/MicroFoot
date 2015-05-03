@@ -65,6 +65,10 @@ public class SoldierShow : VirtualSelector
 		MoveAnimation["Armature|ArmatureAction"].time = 0;
 		yield return new WaitForEndOfFrame();
 		MoveAnimation.Stop();
+		yield return new WaitForEndOfFrame();
+		MoveAnimation["Armature|ArmatureAction"].time = 0;
+		yield return new WaitForEndOfFrame();
+		MoveAnimation.Stop();
 		
 	}
 
