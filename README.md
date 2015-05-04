@@ -18,7 +18,7 @@ Edit : Final alpha version available !
   
 4 players in local and network mode (network mode to come...).
 
-## Software Requirements to participate to the project
+## Software Requirements to participate in the project
 
 * Unity3D
 * Windows/Mac OS as Unity is still unavailable for Linux.
